@@ -4,7 +4,7 @@ import { IMessages } from "../../models/IMessages";
 import { useAppDispatch, useTypedSelector } from "../../hooks/redux";
 import { getMessage } from "../../store/action-creators/message/getMessage";
 import { formatTime } from "../genericFunction";
-import { doc, getDoc, } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import { IUser } from "../../models/IUser";
 import Loader from "../Loader";
@@ -22,22 +22,22 @@ const ChatItem = ({ messageId }: IChatItemProps): JSX.Element => {
     const [companion, setCompanion] = useState<IUser | null>(null)
     const dispatch = useAppDispatch();
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true)
-            const docRefMessage = await getDoc(doc(db, "messages", messageId));
-            const messageDoc = docRefMessage.data();
-            setMessage({
-                users: messageDoc?.users,
-                id: messageDoc?.id,
-                lastСhange: messageDoc?.lastСhange,
-                lastMessages: messageDoc?.lastMessages,
-                messageArr: messageDoc?.messageArr
-            })
-        }
-        fetchData()
-    }, []);
+        if (messageActiveId) {
+            onSnapshot(doc(db, "messages", messageActiveId), (doc) => {
+                const messageDoc = doc.data();
+                setLoading(true)
+                setMessage({
+                    users: messageDoc?.users,
+                    id: messageDoc?.id,
+                    lastСhange: messageDoc?.lastСhange,
+                    lastMessages: messageDoc?.lastMessages,
+                    messageArr: messageDoc?.messageArr
+                })
+            });
+        };
+    }, [messageActiveId]);
     useEffect(() => {
-        if (message && user) {
+        if (message) {
             getCompanion()
             setTimeAgo(formatTime(new Date(message?.lastСhange)))
             const interval = setInterval(() => {
@@ -46,7 +46,6 @@ const ChatItem = ({ messageId }: IChatItemProps): JSX.Element => {
             return () => clearInterval(interval);
         }
     }, [message])
-
     const getCompanion = async () => {
         const companionId: string | undefined = message?.users.find((item) => {
             if (user && item !== user.id) {

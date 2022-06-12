@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import mySvg from './send-ico.svg'
 import "./Chat.css"
@@ -14,18 +14,17 @@ const Chat = (): JSX.Element => {
     const { messageActiveId } = useTypedSelector(state => state.messageReducer);
     const { user } = useTypedSelector(state => state.userReducer);
     const [message, setMessage] = useState<IMessages | null>(null);
-    const [inputText, setInputText] = useState<string>('');
+    const [textareaText, setTextareaText] = useState<string>('');
     const [companion, setCompanion] = useState<IUser | null>(null)
     const LastMessagesElement = useRef<null | HTMLDivElement>(null);
     const dispatch = useAppDispatch();
     useEffect(() => {
-        getCompanion()
+        getCompanion();
     }, [message]);
     useEffect(() => {
         if (messageActiveId) {
-            const fetchData = async () => {
-                const docRefMessage = await getDoc(doc(db, "messages", messageActiveId));
-                const messageDoc = docRefMessage.data();
+            onSnapshot(doc(db, "messages", messageActiveId), (doc) => {
+                const messageDoc = doc.data();
                 setMessage({
                     users: messageDoc?.users,
                     id: messageDoc?.id,
@@ -33,8 +32,7 @@ const Chat = (): JSX.Element => {
                     lastMessages: messageDoc?.lastMessages,
                     messageArr: messageDoc?.messageArr
                 })
-            }
-            fetchData();
+            });
         }
         LastMessagesElement.current?.scrollIntoView();
     }, [messageActiveId]);
@@ -54,13 +52,13 @@ const Chat = (): JSX.Element => {
             })
         }
     }
-    const inputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setInputText(event.target.value);
+    const textareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
+        setTextareaText(event.target.value);
     }
     const sendChange = (): void => {
-        if (messageActiveId && user) {
-            dispatch(addMessage({ messageId: messageActiveId, userMessage: user?.id, text: inputText }))
-            setInputText('')
+        if (messageActiveId && user && isNaN(Number(textareaText))) {
+            dispatch(addMessage({ messageId: messageActiveId, userMessage: user?.id, text: textareaText }))
+            setTextareaText('')
         }
     }
     return (
@@ -89,7 +87,7 @@ const Chat = (): JSX.Element => {
             </div>
             <div className="chat__new-messages">
                 <div className="chat__new-messages-container">
-                    <input type="text" placeholder="Введите сообщение здесь" value={inputText} onChange={inputChange} />
+                    <textarea placeholder="Введите сообщение здесь" value={textareaText} onChange={textareaChange} />
                     <button onClick={sendChange}>
                         <img src={mySvg} alt="send" />
                     </button>

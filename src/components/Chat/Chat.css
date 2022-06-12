@@ -99,10 +99,12 @@
     width: 100%;
 }
 
-.chat__new-messages-container input {
+.chat__new-messages-container textarea {
     border: none;
     outline: none;
     width: 100%;
+    resize: none;
+    overflow: hidden;
 }
 
 .chat__new-messages-container button {

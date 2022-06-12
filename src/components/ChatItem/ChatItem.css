@@ -40,3 +40,7 @@
     justify-content: center;
     align-items: center;
 }
+
+.chat-item__last-messages {
+    word-break: break-all;
+}
