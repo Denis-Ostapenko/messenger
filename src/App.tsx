@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { useTypedSelector, useAppDispatch } from './hooks/redux';
+import LogIn from './components/Login/Login'
+import Navbar from './components/Navbar';
+import ChatList from './components/ChatList';
+import Chat from './components/Chat';
+import './App.css'
+import "firebase/firestore"
 
-function App() {
+
+function App(): JSX.Element {
+  const { user } = useTypedSelector(state => state.userReducer)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      {user ?
+        <>
+          <Navbar />
+          <div className='app__main'>
+            <ChatList />
+            <Chat />
+          </div>
+        </>
+        :
+        <LogIn />
+      }
     </div>
   );
 }
-
 export default App;
+
