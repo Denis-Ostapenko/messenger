@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useTypedSelector } from "../../hooks/redux";
 import { IUser } from "../../models/IUser";
+import { createMessages } from "../../service/createMessages";
 import { fetchUsers } from "../../store/action-creators/allUsers";
-import { createMessages } from "../../store/action-creators/allMessages";
-import { updateUserFriends } from "../../store/action-creators/user/updateUser";
 import Loader from "../Loader";
 import newChatSvg from './new-chat.svg'
 import './NewChat.css'
@@ -15,9 +14,9 @@ const NewChat = () => {
     const [searhUser, setSearhUser] = useState<string>('')
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(fetchUsers())
-    }, [])
-    useEffect(() => {
+        if(users.length === 0){
+            dispatch(fetchUsers())
+        }
         setUserArr(users)
     }, [users])
     useEffect(() => {
@@ -30,8 +29,9 @@ const NewChat = () => {
         setSearhUser(event.target.value)
     }
     const createNewChat = (companionId: string): void => {
-        dispatch(createMessages({ userToken: token!, companionId }))
-        dispatch(updateUserFriends(companionId))
+        if (token) {
+            createMessages({ userToken: token, companionId })
+        }
     }
 
     return (

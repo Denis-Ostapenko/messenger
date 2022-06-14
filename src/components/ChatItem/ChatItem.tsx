@@ -1,31 +1,29 @@
 import React, { useState, useEffect } from "react";
-import "./ChatItem.css"
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { IMessages } from "../../models/IMessages";
 import { useAppDispatch, useTypedSelector } from "../../hooks/redux";
-import { getMessage } from "../../store/action-creators/message/getMessage";
+import { getMessagesId } from "../../store/action-creators/message/getMessagesId";
 import { formatTime } from "../genericFunction";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import { IUser } from "../../models/IUser";
 import Loader from "../Loader";
+import "./ChatItem.css"
 
 interface IChatItemProps {
     messageId: string
 }
 
 const ChatItem = ({ messageId }: IChatItemProps): JSX.Element => {
-    const { user } = useTypedSelector(state => state.userReducer);
-    const { messageActiveId } = useTypedSelector(state => state.messageReducer)
+    const { user, messageActiveId } = useTypedSelector(state => state.userReducer);
     const [message, setMessage] = useState<IMessages | null>(null)
     const [timeAgo, setTimeAgo] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     const [companion, setCompanion] = useState<IUser | null>(null)
     const dispatch = useAppDispatch();
     useEffect(() => {
-        if (messageActiveId) {
-            onSnapshot(doc(db, "messages", messageActiveId), (doc) => {
+        if (messageId) {
+            onSnapshot(doc(db, "messages", messageId), (doc) => {
                 const messageDoc = doc.data();
-                setLoading(true)
                 setMessage({
                     users: messageDoc?.users,
                     id: messageDoc?.id,
@@ -35,7 +33,7 @@ const ChatItem = ({ messageId }: IChatItemProps): JSX.Element => {
                 })
             });
         };
-    }, [messageActiveId]);
+    }, [messageId]);
     useEffect(() => {
         if (message) {
             getCompanion()
@@ -47,10 +45,11 @@ const ChatItem = ({ messageId }: IChatItemProps): JSX.Element => {
         }
     }, [message])
     const getCompanion = async () => {
-        const companionId: string | undefined = message?.users.find((item) => {
+        const companionId: string | undefined = message?.users.find((item:string) => {
             if (user && item !== user.id) {
                 return item
             }
+            return undefined
         });
         if (companionId) {
             const response = await getDoc(doc(db, "users", companionId));
@@ -71,7 +70,7 @@ const ChatItem = ({ messageId }: IChatItemProps): JSX.Element => {
         <>
             {!loading ?
                 <div className={messageActiveId !== messageId ? "chat-item" : "chat-item chat-item--active"}
-                    onClick={() => dispatch(getMessage(messageId))}>
+                    onClick={() => dispatch(getMessagesId(messageId))}>
                     <div className="chat-item__header">
                         <div className="chat-item__user"><img src={companion?.image ? companion?.image :
                             "https://windows10free.ru/uploads/posts/2017-02/thumbs/1487679899_icon-user-640x640.png"} alt="avatar" />

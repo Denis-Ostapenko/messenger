@@ -2,8 +2,7 @@ import React from "react";
 import "./Navbar.css"
 import { useAppDispatch, useTypedSelector } from "../../hooks/redux";
 import { userСlear } from "../../store/action-creators/user";
-import { messageСlear } from "../../store/action-creators/message";
-import { messagesСlear } from "../../store/action-creators/allMessages";
+
 
 const Navbar = (): JSX.Element => {
     const { user } = useTypedSelector(state => state.userReducer)
@@ -11,8 +10,6 @@ const Navbar = (): JSX.Element => {
     const onClickExit: React.MouseEventHandler<HTMLButtonElement> = () => {
         localStorage.removeItem('token')
         dispatch(userСlear());
-        dispatch(messageСlear());
-        dispatch(messagesСlear())
     }
 
     return (

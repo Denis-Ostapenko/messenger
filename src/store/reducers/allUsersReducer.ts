@@ -29,12 +29,7 @@ export const allUsersSlice = createSlice({
     usersfetchError(state, action: PayloadAction<string>) {
       state.loading = false;
       state.error = action.payload;
-    },
-    usersСlear(state) {
-      state.users = [];
-      state.loading = false;
-      state.error = null;
-  },
+    }
   }
 })
 

@@ -20,6 +20,6 @@ export const userSavedLogin = (token: string) => async (dispatch: AppDispatch) =
         let message
         if (error instanceof Error) message = error.message
         else message = String(error)
-        dispatch(userSlice.actions.userLoginError(message))
+        dispatch(userSlice.actions.userError(message))
     }
 }
