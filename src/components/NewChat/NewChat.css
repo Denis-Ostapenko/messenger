@@ -2,7 +2,7 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    background-color: #FFF;
+    background-color: #fff;
     border-radius: 6px;
     top: 70px;
     margin-left: 20px;
@@ -25,7 +25,7 @@
 }
 
 .new-chat__list::-webkit-scrollbar-thumb {
-    background-color: #B7BDCB;
+    background-color: #b7bdcb;
     border-radius: 10px;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .new-chat__item:last-child {
-    border: none
+    border: none;
 }
 
 .new-chat__image {
@@ -49,7 +49,7 @@
 }
 
 .new-chat__searh {
-    background: #FFFFFF;
+    background: #ffffff;
     height: 54px;
     font-size: 20px;
     padding: 5px 25px;
@@ -65,18 +65,19 @@
 }
 
 .new-chat__button {
+    display: flex;
     border: none;
     cursor: pointer;
     background: none;
     padding: 0;
     transition: 1s;
+    color: #007cff;
 }
 
 .new-chat__button:hover {
-    transform: scale(1.2)
-
+    transform: scale(1.2);
 }
-.new-chat__loader{
+.new-chat__loader {
     display: flex;
     justify-content: center;
     align-items: center;

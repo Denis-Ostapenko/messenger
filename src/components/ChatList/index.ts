@@ -1,3 +1,3 @@
-import Chats from "./ChatList";
+import Chats from './ChatList';
 
 export default Chats;

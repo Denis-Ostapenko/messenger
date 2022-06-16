@@ -1,5 +1,5 @@
-import { addDoc, collection, doc, getDoc, Timestamp, updateDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import { addDoc, collection, doc, getDoc, Timestamp, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 interface createMessagesProps {
     userToken: string;
@@ -9,26 +9,26 @@ interface createMessagesProps {
 export const createMessages = async ({ userToken, companionId }: createMessagesProps) => {
     const newMessages = {
         users: [userToken, companionId],
-        lastСhange: Timestamp.now().toDate().toString()
-    }
-    const docRef = await addDoc(collection(db, "messages"), newMessages);
+        lastСhange: Timestamp.now().toDate().toString(),
+    };
+    const docRef = await addDoc(collection(db, 'messages'), newMessages);
     await updateDoc(docRef, {
-        id: docRef.id
+        id: docRef.id,
     });
-    const userRef = doc(db, "users", userToken);
-    const userResponse = await getDoc(userRef);
-    const companionRef = doc(db, "users", companionId);
-    const companionResponse = await getDoc(companionRef);
-    const messagesUser = userResponse.data()?.messages ? [docRef.id, ...userResponse.data()?.messages] : [docRef.id];
-    const messagesCompanion = companionResponse.data()?.messages ? [docRef.id, ...companionResponse.data()?.messages] : [docRef.id];
-    const friendsUser = userResponse.data()?.friends ? [companionId, ...userResponse.data()?.friends] : [companionId];
-    const friendsCompanion = companionResponse.data()?.friends ? [userToken, ...companionResponse.data()?.friends] : [userToken];
+    const userRef = doc(db, 'users', userToken);
+    const userResponse = (await getDoc(userRef)).data();
+    const companionRef = doc(db, 'users', companionId);
+    const companionResponse = (await getDoc(companionRef)).data();
+    const messagesUser = userResponse?.messages ? [docRef.id, ...userResponse.messages] : [docRef.id];
+    const messagesCompanion = companionResponse?.messages ? [docRef.id, ...companionResponse.messages] : [docRef.id];
+    const friendsUser = userResponse?.friends ? [companionId, ...userResponse.friends] : [companionId];
+    const friendsCompanion = companionResponse?.friends ? [userToken, ...companionResponse.friends] : [userToken];
     await updateDoc(userRef, {
         messages: messagesUser,
-        friends: friendsUser
+        friends: friendsUser,
     });
     await updateDoc(companionRef, {
         messages: messagesCompanion,
-        friends: friendsCompanion
+        friends: friendsCompanion,
     });
-}
+};

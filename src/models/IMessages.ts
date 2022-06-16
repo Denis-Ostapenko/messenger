@@ -1,4 +1,4 @@
-export interface IMessage  {
+export interface IMessage {
     userMessage: string;
     text: string;
     date: string;

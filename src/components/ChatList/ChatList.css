@@ -1,7 +1,7 @@
 .chat-list {
     display: flex;
     flex-direction: column;
-    min-width: 500px;
+    min-width: 450px;
     position: relative;
 }
 
@@ -21,15 +21,16 @@
 }
 
 .chat-list__container::-webkit-scrollbar-thumb {
-    background-color: #B7BDCB;
+    background-color: #b7bdcb;
     border-radius: 10px;
 }
 
 .chat-list__new-chat {
     height: 50px;
     font-size: 20px;
-    color: #FFFFFF;
-    box-shadow: 6px 6px 25px rgba(42, 139, 242, 0.15), 4px 4px 25px rgba(42, 139, 242, 0.05), 10px 6px 25px rgba(42, 139, 242, 0.15);
+    color: #ffffff;
+    box-shadow: 6px 6px 25px rgba(42, 139, 242, 0.15), 4px 4px 25px rgba(42, 139, 242, 0.05),
+        10px 6px 25px rgba(42, 139, 242, 0.15);
     border-radius: 6px;
     border: none;
     margin-bottom: 20px;
@@ -42,7 +43,7 @@
 }
 
 .chat-list__searh {
-    background: #FFFFFF;
+    background: #ffffff;
     height: 50px;
     font-size: 20px;
     padding: 5px 25px;
@@ -53,5 +54,5 @@
     margin-left: 20px;
 }
 .chat-list__searh:focus-visible {
-    outline: 1px solid #7CB8F7;
+    outline: 1px solid #7cb8f7;
 }

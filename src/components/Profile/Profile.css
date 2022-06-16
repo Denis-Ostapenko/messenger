@@ -15,12 +15,12 @@
     }
 }
 
-.login {
+.profile {
     position: relative;
     margin-top: 120px;
 }
 
-.login-error {
+.profile-error {
     width: 100%;
     top: -60px;
     animation-name: translate;
@@ -35,7 +35,7 @@
     color: white;
 }
 
-.login__container {
+.profile__container {
     align-self: center;
     background: #ffffff;
     border-radius: 6px;
@@ -46,19 +46,19 @@
     align-items: center;
 }
 
-.login__container > h2 {
+.profile__container > h2 {
     font-size: 36px;
     color: #0d1c2e;
     line-height: 36px;
     margin-bottom: 20px;
 }
 
-.login__container > form {
+.profile__container > form {
     display: flex;
     flex-direction: column;
 }
 
-.login__element {
+.profile__element {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
@@ -66,7 +66,7 @@
     align-items: baseline;
 }
 
-.login__element input {
+.profile__element input {
     margin-left: 10px;
     height: 40px;
     border-radius: 6px;
@@ -74,11 +74,11 @@
     border: 1px solid #e1e3e6;
 }
 
-.login__element input:focus-visible {
+.profile__element input:focus-visible {
     outline: 1px solid #7cb8f7;
 }
 
-.login__submit {
+.profile__submit {
     color: #ffffff;
     height: 40px;
     font-size: 20px;
@@ -93,18 +93,26 @@
     transition: 0.5s;
 }
 
-.login__submit:hover {
+.profile__submit:hover {
     opacity: 0.8;
 }
 
-.login__another-button {
-    background: none;
-    border: none;
-    color: #2a8bf2;
-    cursor: pointer;
+.profile-success {
+    width: 100%;
+    top: -60px;
+    animation-name: translate;
+    animation-duration: 2s;
+    position: absolute;
+    background: #6bff77;
+    color: white;
+    border-radius: 6px;
+    box-shadow: 0px 10px 55px rgba(0, 0, 0, 0.05), 0px 4px 10px rgba(0, 0, 0, 0.25), 0px 10px 25px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: center;
+    padding: 10px;
 }
 
-.login-loader {
+.profile-loader {
     position: absolute;
     top: -60px;
     left: calc(50% - 25px);

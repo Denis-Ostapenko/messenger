@@ -2,7 +2,7 @@
     width: 100%;
     min-height: 170px;
     padding: 15px 25px;
-    background: #FFFFFF;
+    background: #ffffff;
     border-radius: 6px;
     margin-bottom: 20px;
     box-shadow: 0px 10px 12px rgb(0 0 0 / 5%), 0px 4px 10px rgb(0 0 0 / 25%), 0px 10px 5px rgb(0 0 0 / 5%);
@@ -30,8 +30,8 @@
 }
 
 .chat-item--active {
-    background: linear-gradient(96.78deg, #7CB8F7 0%, #2A8BF2 100%);
-    color: #FFFFFF;
+    background: linear-gradient(96.78deg, #7cb8f7 0%, #2a8bf2 100%);
+    color: #ffffff;
 }
 
 .chat-item__loader {

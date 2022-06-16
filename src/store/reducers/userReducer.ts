@@ -1,11 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUser } from "../../models/IUser"
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUser } from '../../models/IUser';
 
 interface UserState {
     user: IUser | null;
     token: null | string;
     messageActiveId: string | null;
     loading: boolean;
+    errorUpdate: null | string;
     error: null | string;
 }
 
@@ -14,9 +15,9 @@ const initialState: UserState = {
     token: localStorage.getItem('token'),
     messageActiveId: null,
     loading: false,
-    error: null
-
-}
+    errorUpdate: null,
+    error: null,
+};
 
 export const userSlice = createSlice({
     name: 'user',
@@ -29,11 +30,20 @@ export const userSlice = createSlice({
         userLoginSuccess(state, action: PayloadAction<IUser>) {
             state.loading = false;
             state.error = null;
+            state.errorUpdate = null;
             state.user = action.payload;
         },
         userError(state, action: PayloadAction<string>) {
             state.loading = false;
             state.error = action.payload;
+        },
+        updateError(state, action: PayloadAction<string>) {
+            state.loading = false;
+            state.errorUpdate = action.payload;
+        },
+        updateFinished(state) {
+            state.loading = false;
+            state.errorUpdate = null;
         },
         userLoginToken(state, action: PayloadAction<string>) {
             state.token = action.payload;
@@ -48,7 +58,7 @@ export const userSlice = createSlice({
                 state.user.messages = [...action.payload];
             }
         },
-        messageSuccess(state, action: PayloadAction<string>) {
+        messageSuccess(state, action: PayloadAction<string | null>) {
             state.loading = false;
             state.error = null;
             state.messageActiveId = action.payload;
@@ -59,8 +69,8 @@ export const userSlice = createSlice({
             state.messageActiveId = null;
             state.token = null;
             state.error = null;
-        }
-    }
-})
+        },
+    },
+});
 
 export default userSlice.reducer;
