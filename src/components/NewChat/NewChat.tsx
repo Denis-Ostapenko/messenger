@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import { useAppDispatch, useTypedSelector } from '../../hooks/redux';
-import { IUser } from '../../models/IUser';
+import { IUser } from '../../type/IUser';
 import { createMessages } from '../../service/createMessages';
 import { fetchUsers } from '../../store/action-creators/allUsers';
 import Loader from '../Loader';

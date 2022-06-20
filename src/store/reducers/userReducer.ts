@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../../models/IUser';
+import { IUser } from '../../type/IUser';
 
 interface UserState {
     user: IUser | null;
     token: null | string;
+    isMobile: boolean;
     messageActiveId: string | null;
     loading: boolean;
     errorUpdate: null | string;
@@ -13,6 +14,7 @@ interface UserState {
 const initialState: UserState = {
     user: null,
     token: localStorage.getItem('token'),
+    isMobile: window.innerWidth <= 768,
     messageActiveId: null,
     loading: false,
     errorUpdate: null,

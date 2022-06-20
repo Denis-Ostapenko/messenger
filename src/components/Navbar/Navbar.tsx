@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useTypedSelector } from '../../hooks/redux';
+import { getMessagesId } from '../../store/action-creators/message/getMessagesId';
 import { userСlear } from '../../store/action-creators/user';
 import './Navbar.css';
 
 const Navbar = (): JSX.Element => {
-    const { user } = useTypedSelector((state) => state.userReducer);
+    const { user, isMobile } = useTypedSelector((state) => state.userReducer);
     const dispatch = useAppDispatch();
     const onClickExit: React.MouseEventHandler<HTMLButtonElement> = () => {
         localStorage.removeItem('token');
@@ -15,7 +16,15 @@ const Navbar = (): JSX.Element => {
     return (
         <nav className='navbar'>
             <Link to='/'>
-                <h2>Chats</h2>
+                <h2
+                    onClick={() => {
+                        if (isMobile) {
+                            dispatch(getMessagesId(null));
+                        }
+                    }}
+                >
+                    Chats
+                </h2>
             </Link>
             <div className='navbar__element'>
                 <Link to='/profile'>

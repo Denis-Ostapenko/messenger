@@ -2,7 +2,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { allUsersSlice } from '../reducers/allUsersReducer';
 import { AppDispatch } from '..';
-import { IUser } from '../../models/IUser';
+import { IUser } from '../../type/IUser';
 
 export const fetchUsers = () => async (dispatch: AppDispatch) => {
     try {

@@ -56,3 +56,20 @@
 .chat-list__searh:focus-visible {
     outline: 1px solid #7cb8f7;
 }
+@media screen and (min-width: 320px) and (max-width: 768px) {
+    .chat-list {
+        min-width: 100%;
+    }
+    .chat-list__new-chat {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .chat-list__searh {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .chat-list__container {
+        padding-right: 15px;
+        height: calc(100vh - 280px);
+    }
+}

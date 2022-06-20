@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useTypedSelector } from '../../hooks/redux';
-import { IUser } from '../../models/IUser';
+import { IUser } from '../../type/IUser';
 import { updateUser } from '../../store/action-creators/user/updateUser';
 import Loader from '../Loader';
 import './Profile.css';

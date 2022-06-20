@@ -3,24 +3,29 @@ import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import CleaningServicesOutlinedIcon from '@mui/icons-material/CleaningServicesOutlined';
 import SendIcon from '@mui/icons-material/Send';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 import { formatISO9075 } from 'date-fns';
+import { getMessagesId } from '../../store/action-creators/message/getMessagesId';
 import { db } from '../../firebase';
 import { addMessage } from '../../service/addMessage';
-import { useTypedSelector } from '../../hooks/redux';
+import { useAppDispatch, useTypedSelector } from '../../hooks/redux';
 import { funcDayAndMonth } from '../genericFunction';
 import { CreateIcon } from '../CreateIcon';
 import { clearMessageArr } from '../../service/clearMessageArr';
-import { IMessages } from '../../models/IMessages';
-import { IUser } from '../../models/IUser';
+import { IMessages } from '../../type/IMessages';
+import { IUser } from '../../type/IUser';
 import { deleteMessage } from '../../service/deleteMessage';
 import './Chat.css';
 
 const Chat = (): JSX.Element => {
-    const { user, messageActiveId } = useTypedSelector((state) => state.userReducer);
+    const { user, messageActiveId, isMobile } = useTypedSelector((state) => state.userReducer);
     const [message, setMessage] = useState<IMessages | null>(null);
     const [textareaText, setTextareaText] = useState<string>('');
     const [companion, setCompanion] = useState<IUser | null>(null);
     const LastMessagesElement = useRef<null | HTMLDivElement>(null);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     useEffect(() => {
         if (message) {
             getCompanion();
@@ -86,6 +91,17 @@ const Chat = (): JSX.Element => {
                 <div className='chat'>
                     <header className='chat__header'>
                         <div className='chat__header-element'>
+                            {isMobile ? (
+                                <button
+                                    className='chat__header-back'
+                                    onClick={() => {
+                                        dispatch(getMessagesId(null));
+                                        navigate('/');
+                                    }}
+                                >
+                                    <CreateIcon component={<ArrowBackIcon />} sx={{ fontSize: 35 }} color='inherit' />
+                                </button>
+                            ) : null}
                             <img
                                 className='chat__header-img'
                                 src={
@@ -109,7 +125,10 @@ const Chat = (): JSX.Element => {
                                 className='chat__header-delete'
                                 onClick={() => {
                                     if (message?.users) {
-                                        return deleteMessage(messageActiveId, message.users);
+                                        deleteMessage(messageActiveId, message.users);
+                                        if (isMobile) {
+                                            navigate('/');
+                                        }
                                     }
                                 }}
                             >

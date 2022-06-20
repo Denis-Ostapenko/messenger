@@ -11,3 +11,8 @@
     padding: 50px 60px 0px;
     justify-content: space-between;
 }
+@media screen and (min-width: 320px) and (max-width: 768px) {
+    .app__main {
+        padding: 20px 0px 0px;
+    }
+}

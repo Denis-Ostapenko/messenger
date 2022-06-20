@@ -1,6 +1,6 @@
 import { doc, getDoc, Timestamp, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { IMessage } from '../models/IMessages';
+import { IMessage } from '../type/IMessages';
 
 interface addMessageProps {
     messageId: string;

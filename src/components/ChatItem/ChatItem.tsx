@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc, onSnapshot } from 'firebase/firestore';
-import { IMessages } from '../../models/IMessages';
+import { useNavigate } from 'react-router-dom';
+import { IMessages } from '../../type/IMessages';
 import { useAppDispatch, useTypedSelector } from '../../hooks/redux';
 import { getMessagesId } from '../../store/action-creators/message/getMessagesId';
 import { formatTime } from '../genericFunction';
 import { db } from '../../firebase';
-import { IUser } from '../../models/IUser';
+import { IUser } from '../../type/IUser';
 import Loader from '../Loader';
 import './ChatItem.css';
 
@@ -14,12 +15,13 @@ interface IChatItemProps {
 }
 
 const ChatItem = ({ messageId }: IChatItemProps): JSX.Element => {
-    const { user, messageActiveId } = useTypedSelector((state) => state.userReducer);
+    const { user, messageActiveId, isMobile } = useTypedSelector((state) => state.userReducer);
     const [message, setMessage] = useState<IMessages | null>(null);
     const [timeAgo, setTimeAgo] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [companion, setCompanion] = useState<IUser | null>(null);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     useEffect(() => {
         if (messageId) {
             onSnapshot(doc(db, 'messages', messageId), (doc) => {
@@ -73,7 +75,12 @@ const ChatItem = ({ messageId }: IChatItemProps): JSX.Element => {
             {!loading ? (
                 <div
                     className={messageActiveId !== messageId ? 'chat-item' : 'chat-item chat-item--active'}
-                    onClick={() => dispatch(getMessagesId(messageId))}
+                    onClick={() => {
+                        dispatch(getMessagesId(messageId));
+                        if (isMobile) {
+                            navigate(`/${messageId}`);
+                        }
+                    }}
                 >
                     <div className='chat-item__header'>
                         <div className='chat-item__user'>

@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar';
 import { useTypedSelector } from '../hooks/redux';
 
 const Home = (): JSX.Element => {
-    const { user } = useTypedSelector((state) => state.userReducer);
+    const { user, isMobile } = useTypedSelector((state) => state.userReducer);
     if (!user) {
         return <Navigate to='/login' />;
     }
@@ -14,8 +14,14 @@ const Home = (): JSX.Element => {
         <>
             <Navbar />
             <div className='app__main'>
-                <ChatList />
-                <Chat />
+                {isMobile ? (
+                    <ChatList />
+                ) : (
+                    <>
+                        <ChatList />
+                        <Chat />
+                    </>
+                )}
             </div>
         </>
     );

@@ -2,7 +2,7 @@ import { AppDispatch } from '../..';
 import { userSlice } from '../../reducers/userReducer';
 import { collection, getDocs, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
-import { IUser } from '../../../models/IUser';
+import { IUser } from '../../../type/IUser';
 
 class ValidationUserError extends Error {
     constructor(message: string) {

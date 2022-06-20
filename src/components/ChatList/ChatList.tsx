@@ -13,7 +13,7 @@ const Chats = (): JSX.Element => {
     const [buttonNewChat, setButtonNewChat] = useState<string>('Создать новый чат');
     const [searhMessage, setSearhMessage] = useState<string>('');
     const [messagesArr, setMessagesArr] = useState<string[] | undefined>(undefined);
-    const { user } = useTypedSelector((state) => state.userReducer);
+    const { user, isMobile } = useTypedSelector((state) => state.userReducer);
     const dispatch = useAppDispatch();
     useEffect(() => {
         if (user) {
@@ -32,7 +32,9 @@ const Chats = (): JSX.Element => {
     useEffect(() => {
         if (user?.messages) {
             setMessagesArr(user.messages);
-            dispatch(getMessagesId(user.messages[0]));
+            if (!isMobile) {
+                dispatch(getMessagesId(user.messages[0]));
+            }
         }
     }, [user?.messages]);
     useEffect(() => {

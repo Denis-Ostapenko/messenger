@@ -50,3 +50,15 @@
 .navbar__exit:hover {
     transform: scale(1.2);
 }
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+    .navbar {
+        padding: 0 20px;
+    }
+    .navbar__user p {
+        display: none;
+    }
+    .navbar__exit {
+        margin-left: 10px;
+    }
+}

@@ -1,7 +1,7 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { AppDispatch } from '../..';
 import { db } from '../../../firebase';
-import { IUser } from '../../../models/IUser';
+import { IUser } from '../../../type/IUser';
 import { userSlice } from '../../reducers/userReducer';
 
 export const userSavedLogin = (token: string) => async (dispatch: AppDispatch) => {

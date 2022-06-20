@@ -117,3 +117,29 @@
     top: -60px;
     left: calc(50% - 25px);
 }
+@media screen and (min-width: 320px) and (max-width: 768px) {
+    .profile {
+        width: 100%;
+    }
+    .profile__container > h2 {
+        font-size: 32px;
+    }
+    .profile__container {
+        padding: 30px 20px;
+        margin: 0 10px;
+    }
+    .profile-success {
+        width: calc(100% - 20px);
+        margin: 0 10px;
+    }
+    .profile-error {
+        width: calc(100% - 20px);
+        margin: 0 10px;
+    }
+    .profile__container > form {
+        width: 100%;
+    }
+    .profile__element input {
+        width: 190px;
+    }
+}
