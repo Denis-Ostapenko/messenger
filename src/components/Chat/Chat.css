@@ -172,7 +172,7 @@
     }
     .chat__messages {
         padding: 10px 10px;
-        height: calc(100vh - 250px);
+        height: calc(100vh - 290px);
     }
     .chat__message-user {
         padding: 6px 10px;
