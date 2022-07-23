@@ -9,6 +9,10 @@ ES6+, React.js, Redux, Router, база данных firebase, ESLint, Prettier.
 `npm run start` — запускает сайт для разработки <br>
 `npm run deploy` — деплой проекта на gh-pages
 
+Тестовая аутентификация:
+Логин: 12345
+Пароль: 12345
+
 [Ссылка на проект](https://denis-ostapenko.github.io/messenger/#/login)
 
 ## Gif Demo
